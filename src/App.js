@@ -75,6 +75,16 @@ class App extends Component {
   updatePrice(priceChange, id) {
     // axios (PUT)
     // setState with response -> vehiclesToDisplay
+    axios
+      .put(BASE_URL+`vehicles/${id}/${priceChange}`)
+      .then(res => {
+        this.setState({
+          ...this.setState,
+          vehiclesToDisplay: res.data.vehicles
+        })
+        toast.success(`updated vehicles successfully`);
+      })
+      .catch(error=> toast.error(error));
   }
 
   addCar() {
