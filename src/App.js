@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import logo from './mainStreetAuto.svg'
 import axios from 'axios'
+import {BASE_URL} from './shared/baseUrl';
 import './App.css'
 
 // Toast notification dependencies
@@ -28,9 +29,23 @@ class App extends Component {
     this.deleteBuyer = this.deleteBuyer.bind(this)
   }
 
+  componentDidMount(){
+    this.getVehicles();
+  }
+
   getVehicles() {
     // axios (GET)
     // setState with response -> vehiclesToDisplay
+    axios
+      .get(BASE_URL+'vehicles')
+      .then(res => {
+        console.log(res.data);
+        this.setState({
+          vehiclesToDisplay: res.data
+        });
+        toast.success('Retrieved vehicles from API');
+      })
+      .catch(error => toast.error(`${error}`));
   }
 
   getPotentialBuyers() {
